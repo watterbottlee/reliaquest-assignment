@@ -1,21 +1,21 @@
 package com.challenge.api.exceptions;
 
 import com.challenge.api.payloads.GlobalErrorResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(EmployeeNotFoundException.class)
     public ResponseEntity<GlobalErrorResponse> handleEmployeeNotFound(EmployeeNotFoundException ex) {
+        log.info("EmployeeNotFoundException triggered");
         GlobalErrorResponse response = new GlobalErrorResponse(
                 false,
                 ex.getMessage(),
@@ -27,6 +27,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidRequestException.class)
     public ResponseEntity<GlobalErrorResponse> handleInvalidRequest(InvalidRequestException ex) {
+        log.info("InvalidRequestException triggered");
         GlobalErrorResponse response = new GlobalErrorResponse(
                 false,
                 ex.getMessage(),
@@ -38,6 +39,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EmployeeAlreadyExistsException.class)
     public ResponseEntity<GlobalErrorResponse> handleEmployeeAlreadyExists(EmployeeAlreadyExistsException ex) {
+        log.info("EmployeeAlreadyExistsException triggered");
         GlobalErrorResponse response = new GlobalErrorResponse(
                 false,
                 ex.getMessage(),
@@ -49,6 +51,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<GlobalErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        log.info("MethodArgumentNotValidException triggered");
         GlobalErrorResponse response = new GlobalErrorResponse(
                 false,
                 ex.getMessage(),
@@ -60,6 +63,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GlobalErrorResponse> handleGenericException(Exception ex) {
+        log.info("GenericException triggered");
         GlobalErrorResponse response = new GlobalErrorResponse(
                 false,
                 "An unexpected error occurred: " + ex.getMessage(),
