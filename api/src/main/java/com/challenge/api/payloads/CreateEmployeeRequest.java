@@ -19,9 +19,12 @@ public class CreateEmployeeRequest {
     private String lastName;
 
     @NotNull
+    @Min(0)
     private Integer salary;
 
     @NotNull
+    @Min(18)
+    @Max(65)
     private Integer age;
 
     @NotBlank

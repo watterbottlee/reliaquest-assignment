@@ -26,5 +26,4 @@ public class EmployeeModel implements Employee {
     private Instant contractHireDate;
     private Instant contractTerminationDate;
 
-
 }

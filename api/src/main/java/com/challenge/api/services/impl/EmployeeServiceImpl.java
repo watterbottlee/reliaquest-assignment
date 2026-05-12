@@ -22,6 +22,9 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class EmployeeServiceImpl implements EmployeeService {
 
+    /**
+     * Concurrent Hashmap -> Thread Safe against concurrent Http reqs.
+    */
     private final Map<UUID, Employee> store = new ConcurrentHashMap<>();
 
     public EmployeeServiceImpl() {
@@ -70,17 +73,35 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     private void seedMockData() {
-        createEmployee(buildRequest("Kaniska Ranjan", "Barman", 500000, 21,
-                "Associate Software Engineer", "kaniskaranjanbarman@gmail.com",
-                Instant.parse("2024-01-15T09:00:00Z"), Instant.parse("2029-01-15T09:00:00Z")));
+        createEmployee(buildRequest(
+                "Kaniska Ranjan",
+                "Barman",
+                500000,
+                21,
+                "Associate Software Engineer",
+                "kaniskaranjanbarman@gmail.com",
+                Instant.parse("2024-01-15T09:00:00Z"),
+                Instant.parse("2029-01-15T09:00:00Z")));
 
-        createEmployee(buildRequest("Tiani", "Bello", 600000, 25,
-                "HR Recruiter", "tbello@reliaquest.com",
-                Instant.parse("2024-01-15T09:00:00Z"), Instant.parse("2029-01-15T09:00:00Z")));
+        createEmployee(buildRequest(
+                "Tiani",
+                "Bello",
+                600000,
+                25,
+                "HR Recruiter",
+                "tbello@reliaquest.com",
+                Instant.parse("2024-01-15T09:00:00Z"),
+                Instant.parse("2029-01-15T09:00:00Z")));
 
-        createEmployee(buildRequest("Relia", "Quest", 700000, 29,
-                "Board Member", "support@reliaquest.com",
-                Instant.parse("2024-01-15T09:00:00Z"), null));
+        createEmployee(buildRequest(
+                "Relia",
+                "Quest",
+                700000,
+                29,
+                "Board Member",
+                "support@reliaquest.com",
+                Instant.parse("2024-01-15T09:00:00Z"),
+                null));
     }
 
     private CreateEmployeeRequest buildRequest(
