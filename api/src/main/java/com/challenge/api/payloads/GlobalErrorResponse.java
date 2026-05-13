@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GlobalErrorResponse<T>{
+public class GlobalErrorResponse<T> {
     private boolean success;
     private String message;
     private T data;

@@ -2,11 +2,10 @@ package com.challenge.api.services.impl;
 
 import com.challenge.api.exceptions.EmployeeAlreadyExistsException;
 import com.challenge.api.exceptions.EmployeeNotFoundException;
-import com.challenge.api.payloads.CreateEmployeeRequest;
 import com.challenge.api.model.Employee;
 import com.challenge.api.model.impl.EmployeeModel;
+import com.challenge.api.payloads.CreateEmployeeRequest;
 import com.challenge.api.services.EmployeeService;
-
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      * Concurrent Hashmap -> Thread Safe against concurrent Http reqs.
-    */
+     */
     private final Map<UUID, Employee> store = new ConcurrentHashMap<>();
 
     public EmployeeServiceImpl() {
@@ -40,15 +38,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee getEmployeeByUuid(UUID uuid) {
         log.info("EmployeeServiceImpl->getEmployeeByUUID() called");
-        return Optional.ofNullable(store.get(uuid))
-                .orElseThrow(() -> new EmployeeNotFoundException(uuid));
+        return Optional.ofNullable(store.get(uuid)).orElseThrow(() -> new EmployeeNotFoundException(uuid));
     }
 
     @Override
     public Employee createEmployee(CreateEmployeeRequest request) {
-        if (store.values().stream()
-                .anyMatch(emp -> emp.getEmail().equalsIgnoreCase(request.getEmail()))) {
-            log.error("EmployeeServiceImpl -> createEmployee() -> employee with already exists with {}", request.getEmail());
+        if (store.values().stream().anyMatch(emp -> emp.getEmail().equalsIgnoreCase(request.getEmail()))) {
+            log.error(
+                    "EmployeeServiceImpl -> createEmployee() -> employee with already exists with {}",
+                    request.getEmail());
             throw new EmployeeAlreadyExistsException(request.getEmail());
         }
 
@@ -105,8 +103,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     private CreateEmployeeRequest buildRequest(
-            String firstName, String lastName, Integer salary, Integer age,
-            String title, String email, Instant contractHireDate, Instant contractTerminationDate) {
+            String firstName,
+            String lastName,
+            Integer salary,
+            Integer age,
+            String title,
+            String email,
+            Instant contractHireDate,
+            Instant contractTerminationDate) {
         CreateEmployeeRequest req = new CreateEmployeeRequest();
         req.setFirstName(firstName);
         req.setLastName(lastName);
